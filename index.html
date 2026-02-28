@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Ranouma 💕</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #fceff9, #e0c3fc, #fbc2eb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.card {
+    width: 350px;
+    background: #ffffffdd;
+    padding: 30px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(255,105,180,0.3);
+    animation: fadeIn 1s ease;
+    position: relative;
+}
+
+h2 { color: #ff5ca8; }
+p { color: #555; font-size: 15px; line-height: 1.6; }
+
+button {
+    margin: 8px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #ff9ecf, #ff6fb5);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+    position: relative;
+}
+
+button:hover { transform: scale(1.08); }
+
+.bunny {
+    width: 110px;
+    margin-bottom: 15px;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity:1; }
+    to { transform: translateY(-10vh); opacity:0; }
+}
+
+/* Explosion */
+.explosion {
+    position: absolute;
+    font-size: 24px;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    from { transform: scale(0); opacity:1; }
+    to { transform: translate(var(--x), var(--y)) scale(1.8); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Hidden YouTube Player -->
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/MYPVQccHhAQ?enablejsapi=1"
+allow="autoplay">
+</iframe>
+
+<div class="card" id="card">
+    <img class="bunny" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+    <h2>Hey My Love 💕</h2>
+    <p>I want to talk to you about something...</p>
+    <button onclick="startExperience()">Continue 💗</button>
+</div>
+
+<script>
+let step = 1;
+let musicStarted = false;
+
+function startExperience() {
+    if (!musicStarted) {
+        document.getElementById("music").src += "&autoplay=1&loop=1&playlist=MYPVQccHhAQ";
+        musicStarted = true;
+    }
+    nextMessage();
+}
+
+function nextMessage() {
+    const card = document.getElementById("card");
+
+    if (step === 1) {
+        card.innerHTML = `
+        <img class="bunny" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+        <h2>My Heart 🥺</h2>
+        <p>I really hurt you...</p>
+        <button onclick="nextMessage()">Continue 💕</button>
+        `;
+        step++;
+    }
+
+    else if (step === 2) {
+        card.innerHTML = `
+        <img class="bunny" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+        <h2>From My Whole Heart 💖</h2>
+        <p>
+        I am really sorry for not staying with you today in class.<br><br>
+        I love you and I care about you with my whole heart and soul.<br><br>
+        Could you forgive me?
+        </p>
+        <button onclick="forgive()">Yes 🥺💕</button>
+        <button id="noBtn">No 😏</button>
+        `;
+        moveNoButton();
+    }
+}
+
+function moveNoButton() {
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+        noBtn.style.position = "absolute";
+        noBtn.style.left = Math.random()*250+"px";
+        noBtn.style.top = Math.random()*250+"px";
+    });
+}
+
+function forgive() {
+    heartExplosion();
+    const card = document.getElementById("card");
+    card.innerHTML = `
+    <img class="bunny" src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
+    <h2>I Love You 💞</h2>
+    <p>Be Mine Forever? 💍</p>
+    <button onclick="finalYes()">YESSS 💖</button>
+    <button id="noBtn2">No 🙈</button>
+    `;
+    moveNoButtonAgain();
+}
+
+function moveNoButtonAgain() {
+    const noBtn = document.getElementById("noBtn2");
+    noBtn.addEventListener("mouseover", () => {
+        noBtn.style.position = "absolute";
+        noBtn.style.left = Math.random()*250+"px";
+        noBtn.style.top = Math.random()*250+"px";
+    });
+}
+
+function finalYes() {
+    heartExplosion();
+    document.getElementById("card").innerHTML = `
+    <h2>Forever Yours 💍💕</h2>
+    <p>Mwaaaah 💋<br>I love you Ranouma ❤️</p>
+    `;
+}
+
+function heartExplosion() {
+    for (let i = 0; i < 35; i++) {
+        const heart = document.createElement("div");
+        heart.className = "explosion";
+        heart.innerHTML = "💖";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.setProperty('--x',(Math.random()*500-250)+"px");
+        heart.style.setProperty('--y',(Math.random()*500-250)+"px");
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),1200);
+    }
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,700);
+</script>
+
+</body>
+</html>
